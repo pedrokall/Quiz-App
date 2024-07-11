@@ -17,7 +17,18 @@ class _QuizStartScreenState extends State<QuizStartScreen> {
           Image.asset(
             'assets/images/quiz-logo.png',
             width: 300,
+            color: const Color.fromARGB(180, 255, 255, 255),
           ),
+
+          /* Alternativa válida, porém não otimizada:
+          Opacity(
+            opacity: 0.7,
+            child: Image.asset(
+              'assets/images/quiz-logo.png',
+              width: 300,
+            ),
+          ), */
+
           const SizedBox(
             height: 80,
           ),
@@ -29,12 +40,13 @@ class _QuizStartScreenState extends State<QuizStartScreen> {
           const SizedBox(
             height: 30,
           ),
-          OutlinedButton(
+          OutlinedButton.icon(
             style: OutlinedButton.styleFrom(
               foregroundColor: Colors.white,
             ),
             onPressed: () {},
-            child: const Text(
+            icon: const Icon(Icons.arrow_right_alt),
+            label: const Text(
               'Start Quiz',
               style: TextStyle(fontSize: 16),
             ),
