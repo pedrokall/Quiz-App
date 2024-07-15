@@ -4,7 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class QuestionsScreenWidget extends StatefulWidget {
-  const QuestionsScreenWidget({super.key});
+  const QuestionsScreenWidget({
+    super.key,
+    required this.aoSelecionarResposta,
+  });
+
+  final void Function(String resposta) aoSelecionarResposta;
 
   @override
   State<QuestionsScreenWidget> createState() => _QuestionsScreenWidgetState();
@@ -13,7 +18,8 @@ class QuestionsScreenWidget extends StatefulWidget {
 class _QuestionsScreenWidgetState extends State<QuestionsScreenWidget> {
   var questaoAtualIndex = 0;
 
-  void responderQuestao() {
+  void responderQuestao(String respostaSelecionada) {
+    widget.aoSelecionarResposta(respostaSelecionada);
     setState(() {
       questaoAtualIndex++;
     });
@@ -34,7 +40,7 @@ class _QuestionsScreenWidgetState extends State<QuestionsScreenWidget> {
             Text(
               questAtual.text,
               style: GoogleFonts.lato(
-                  color: Color.fromARGB(255, 234, 189, 246),
+                  color: const Color.fromARGB(255, 234, 189, 246),
                   fontSize: 24,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
@@ -45,7 +51,9 @@ class _QuestionsScreenWidgetState extends State<QuestionsScreenWidget> {
             ...questAtual.getRespostasEmbaralhadas().map((resposta) {
               return AnswerButton(
                 textoResposta: resposta,
-                onTap: responderQuestao,
+                onTap: () {
+                  responderQuestao(resposta);
+                },
               );
             })
           ],
