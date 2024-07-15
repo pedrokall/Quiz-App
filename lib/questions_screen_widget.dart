@@ -1,6 +1,7 @@
 import 'package:exercicio_quiz_app/answer_button.dart';
 import 'package:exercicio_quiz_app/data/questions.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class QuestionsScreenWidget extends StatefulWidget {
   const QuestionsScreenWidget({super.key});
@@ -10,9 +11,17 @@ class QuestionsScreenWidget extends StatefulWidget {
 }
 
 class _QuestionsScreenWidgetState extends State<QuestionsScreenWidget> {
+  var questaoAtualIndex = 0;
+
+  void responderQuestao() {
+    setState(() {
+      questaoAtualIndex++;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final questAtual = questions[0];
+    final questAtual = questions[questaoAtualIndex];
 
     return SizedBox(
       width: double.infinity,
@@ -24,16 +33,20 @@ class _QuestionsScreenWidgetState extends State<QuestionsScreenWidget> {
           children: [
             Text(
               questAtual.text,
-              style: const TextStyle(
-                color: Colors.white,
-              ),
+              style: GoogleFonts.lato(
+                  color: Color.fromARGB(255, 234, 189, 246),
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(
               height: 30,
             ),
-            ...questAtual.respostas.map((resposta) {
-              return AnswerButton(textoResposta: resposta, onTap: () {});
+            ...questAtual.getRespostasEmbaralhadas().map((resposta) {
+              return AnswerButton(
+                textoResposta: resposta,
+                onTap: responderQuestao,
+              );
             })
           ],
         ),
